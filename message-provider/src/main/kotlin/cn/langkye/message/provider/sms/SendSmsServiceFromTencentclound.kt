@@ -77,7 +77,7 @@ class SendSmsServiceFromTencentclound : ISendSmsService {
         } else {
             req.phoneNumberSet = request.getPhoneSet();
         }
-        //val phoneNumberSet1 = arrayOf("+8617585178571")
+        //val phoneNumberSet1 = arrayOf("+861758517***")
         //req.setPhoneNumberSet(phoneNumberSet1)
 
         req.setTemplateID(templateId)
