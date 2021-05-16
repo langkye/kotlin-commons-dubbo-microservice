@@ -1,0 +1,54 @@
+server:
+  port: 8000
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: kotlin-message-provider
+  main:
+    lazy-initialization: false
+  datasource:
+    url: jdbc:mysql://localhost:3306
+    username: root
+    password: Langkye@12345
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  ##################################### Email Config ###################################
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    password: xxx
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+            port: 465
+          starttls:
+            enable: true
+            required: true
+    protocol: smtp
+    username: 878057221@qq.com
+
+##################################### Email Config ###################################
+dubbo:
+  scan:
+    base-packages: cn.langkye.message.provider
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: nacos://localhost:8848
+##################################### Sms Config ###################################
+tencent:
+  sms:
+    port: 0
+    appid: xxx
+    secretId: xxx
+    secretKey: xxx
+    templateId: xxx
+    sign: xxx

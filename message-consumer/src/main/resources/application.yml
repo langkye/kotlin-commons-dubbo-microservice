@@ -1,0 +1,23 @@
+server:
+  port: 9001
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: kotlin-message-provider
+  main:
+    lazy-initialization: false
+  datasource:
+    url: jdbc:mysql://localhost:3306
+    username: root
+    password: Langkye@12345
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+##################################### Email Config ###################################
+dubbo:
+  scan:
+    base-packages: cn.langkye.message.provider
+  registry:
+    address: nacos://localhost:8848

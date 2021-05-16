@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--<property name="log.path" value="/data/logs/callback"/>-->
+    <property name="log.path" value="/Users/langkye/logs/message"/>
+    <!--<property name="log.path" value="/opt/logs/projects/callback"/>-->
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %highlight(%-5level) %cyan(%logger{200}) [%thread] [processing:%X{processing}] : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/snb.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/snb-%d{yyyy-MM-dd_HH}.%i.log.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 30天 -->
+            <maxHistory>720</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %-5level %logger{36} [%thread] [processing:%X{processing}] : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/error_%d{yyyy-MM-dd_HH}.%i.log.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 30天 -->
+            <maxHistory>720</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %logger{36} [%thread] [processing:%X{processing}] : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_SQL_STAT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sql_stat.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/sql_stat_%d.%i.log.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 10天 -->
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %-5level %logger{36} [%thread] : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_SLOW_SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/slow_sql.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/slow_sql_%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 10天 -->
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %-5level %logger{36} [%thread] [processing:%X{processing}] : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="INFO"/>
+
+    <logger name="druid.sql" level="DEBUG"/>
+
+
+    <!--<logger name="FOSS" level="ERROR"/>-->
+
+    <logger name="com.alibaba.druid.pool.DruidDataSourceStatLoggerImpl" level="INFO">
+        <appender-ref ref="FILE_SQL_STAT"/>
+    </logger>
+
+    <logger name="com.alibaba.druid.filter.stat.StatFilter" additivity="false" level="INFO">
+        <appender-ref ref="FILE_SLOW_SQL"/>
+    </logger>
+
+    <springProfile name="default">
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE_ALL"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="!default">
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE_ALL"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
+    </springProfile>
+</configuration>
