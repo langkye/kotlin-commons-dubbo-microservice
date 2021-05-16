@@ -35,7 +35,6 @@ class MessageProviderApplicationTests {
     fun testSendSms() {
         val req = cn.langkye.api.message.sms.model.SendSmsRequest();
         req.setPhone("1758517xxxx");
-        req.content="sms content";
         logger.info("call smsService, req: {}", req)
         smsService.sendSms(req)
     }

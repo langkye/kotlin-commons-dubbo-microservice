@@ -18,7 +18,7 @@ spring:
   mail:
     default-encoding: UTF-8
     host: smtp.qq.com
-    password: xxx
+    password: xxx       #替换为你的邮箱安全码
     port: 25
     properties:
       mail:
@@ -47,8 +47,15 @@ dubbo:
 tencent:
   sms:
     port: 0
-    appid: xxx
-    secretId: xxx
-    secretKey: xxx
-    templateId: xxx
-    sign: xxx
+    appid: xxx          #替换为你的appid
+    secretId: xxx       #替换为你的secretId
+    secretKey: xxx      #替换为你的secretKey
+    templateId: xxx     #替换为你的templateId
+    sign: xxx           #替换为你的sign
+aliyun:
+  sms:
+    accessKeyId: xxx                  #替换为你的accessKeyId
+    accessKeySecret: xxx              #替换为你的accessKeySecret
+    endpoint: dysmsapi.aliyuncs.com
+    sign: xxx                         #替换为你的sign
+    templateCode: xxx                 #替换为你的templateCode

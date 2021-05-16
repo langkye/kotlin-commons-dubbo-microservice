@@ -6,8 +6,8 @@ class SendSmsRequest:Serializable{
     //类型：SINGLE-发送单条短信，phone；MULTIPLE-发送多条短信,
     var type:SendType= SendType.SINGLE;
     private lateinit var phone:String;
-    private lateinit var phoneSet:Array<String>;
-    lateinit var content:String;
+    private var phoneSet:Array<String> = arrayOf();
+    private var content:String="";
 
     fun setPhone(phone:String){
         this.phone = "+86$phone";
@@ -26,6 +26,14 @@ class SendSmsRequest:Serializable{
 
     fun getPhoneSet():Array<String>{
         return this.phoneSet;
+    }
+
+    fun setContent(content:String){
+        this.content = content;
+    }
+
+    fun getContent():String{
+        return this.content;
     }
 }
 
